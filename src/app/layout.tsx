@@ -1,0 +1,58 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { Providers } from "@/providers/providers";
+import { SessionProvider } from "next-auth/react"
+import Header from "@/components/UI/layout/header";
+import { siteConfig } from "@/config/site.config";
+import { layoutConfig } from "@/config/layout.config";
+import { auth } from "@/auth/auth";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: siteConfig.title,
+  description: siteConfig.description
+};
+
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const session = await auth()
+
+
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Providers>
+          <SessionProvider session={session}>
+            <Header />
+            <main className={`flex flex-col w-full justify-start items-center`}
+              style={{ height: `calc(100vh - ${layoutConfig.headerHeight} - ${layoutConfig.footerHeight})` }}
+            >
+              {children}
+            </main>
+            <footer
+              className={`w-full flex items-center justify-center`}
+              style={{ height: layoutConfig.footerHeight }}
+            >
+              <p>{siteConfig.description}</p>
+            </footer>
+          </SessionProvider>
+        </Providers>
+      </body>
+    </html>
+  );
+}
