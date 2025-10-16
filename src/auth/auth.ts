@@ -3,9 +3,9 @@ import NextAuth from "next-auth"
 import { ZodError } from "zod"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import prisma from "@/utils/prisma"
 import { signInSchema } from "@/schema/zod"
 import { getUserFromDb } from "@/utils/user"
+import prisma from "@/utils/prisma";
 
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -47,4 +47,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge:3600
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    }
+  }
 })

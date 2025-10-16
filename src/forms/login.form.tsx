@@ -31,9 +31,9 @@ const LoginForm = ({ onClose }: Iprops) => {
         placeholder="Введіть email"
         type="email"
         value={formData.email}
-        className={{
+        classNames={{
           inputWrapper: "bg-default-100",
-          input: "text-sm focus:outline-none"
+          input: "text-sm focus:outline-none "
         }}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, email: e.target.value })}
         validate={(value: string) => {
@@ -47,7 +47,7 @@ const LoginForm = ({ onClose }: Iprops) => {
         placeholder="Введіть пароль"
         type="password"
         value={formData.password}
-        className={{
+        classNames={{
           inputWrapper: "bg-default-100",
           input: "text-sm focus:outline-none"
         }}

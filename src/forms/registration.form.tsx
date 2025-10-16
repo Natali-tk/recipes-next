@@ -20,7 +20,6 @@ const RegistrationForm = ({onClose}:Iprops) => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-   
     e.preventDefault();
     console.log("Form submitted:", formData);
     const result = await registerUser(formData)
@@ -36,7 +35,7 @@ const RegistrationForm = ({onClose}:Iprops) => {
         placeholder="Введіть email"
         type="email"
         value={formData.email}
-        className={{
+        classNames={{
           inputWrapper: "bg-default-100",
           input: "text-sm focus:outline-none"
         }}
@@ -53,7 +52,7 @@ const RegistrationForm = ({onClose}:Iprops) => {
         placeholder="Введіть пароль"
         type="password"
         value={formData.password}
-        className={{
+        classNames={{
           inputWrapper: "bg-default-100",
           input: "text-sm focus:outline-none"
         }}
@@ -70,7 +69,7 @@ const RegistrationForm = ({onClose}:Iprops) => {
         placeholder="Підтвердіть пароль"
         type="password"
         value={formData.confirmPassword}
-        className={{
+        classNames={{
           inputWrapper: "bg-default-100",
           input: "text-sm focus:outline-none"
         }}

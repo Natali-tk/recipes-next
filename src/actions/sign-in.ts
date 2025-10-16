@@ -1,5 +1,5 @@
+"use server"
 import { signIn } from "@/auth/auth";
-
 
 const signInWithCredetials = async (email:string, password:string) => {
   try {

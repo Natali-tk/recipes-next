@@ -15,5 +15,5 @@ const RegistrationModal = ({isOpen, onClose}:IProps) => {
     </CustomModal>
   );
 }
- 
+
 export default RegistrationModal;
