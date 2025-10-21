@@ -1,11 +1,12 @@
-const Ingradients = () => {
-  return ( 
-    <>
-      <h1>
-        Інградієнти
-    </h1>
-    </>
-  );
-}
+import IngredientForm from "@/forms/ingredient.form";
 
-export default Ingradients
+const IngredientsPage = () => {
+  return (
+    <div >
+      <IngredientForm />
+      {/* <IngredientsTable /> */}
+    </div>
+  );
+};
+
+export default IngredientsPage;

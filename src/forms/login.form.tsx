@@ -1,13 +1,14 @@
-"use client"
-import signInWithCredetials from "@/actions/sign-in";
-import { Button, Form, Input } from "@heroui/react";
-import React, { ChangeEvent, useState } from "react";
+"use client";
 
-interface Iprops {
+import { signInWithCredentials } from "@/actions/sign-in";
+import { Button, Form, Input } from "@heroui/react";
+import { useState } from "react";
+
+interface IProps {
   onClose: () => void;
 }
 
-const LoginForm = ({ onClose }: Iprops) => {
+const LoginForm = ({ onClose }: IProps) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,8 +18,10 @@ const LoginForm = ({ onClose }: Iprops) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const result=await signInWithCredetials(formData.email, formData.password);
-    console.log("Form submitted:", formData, result);
+    await signInWithCredentials(formData.email, formData.password);
+
+    window.location.reload();
+
     onClose();
   };
 
@@ -28,15 +31,15 @@ const LoginForm = ({ onClose }: Iprops) => {
         aria-label="Email"
         isRequired
         name="email"
-        placeholder="Введіть email"
+        placeholder="Введите email"
         type="email"
         value={formData.email}
         classNames={{
           inputWrapper: "bg-default-100",
           input: "text-sm focus:outline-none "
         }}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, email: e.target.value })}
-        validate={(value: string) => {
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        validate={(value) => {
           if (!value) return "Пошта обов'язкова";
           return null;
         }}
@@ -49,20 +52,25 @@ const LoginForm = ({ onClose }: Iprops) => {
         value={formData.password}
         classNames={{
           inputWrapper: "bg-default-100",
-          input: "text-sm focus:outline-none"
+          input: "text-sm focus:outline-none "
         }}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, password: e.target.value })}
-        validate={(value: string) => {
+        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        validate={(value) => {
           if (!value) return "Пароль обов'язковий";
           return null;
         }}
       />
-      <div className="flex w-[100%] gap-4 items-center pt-8 justify-end">
-        <Button variant="light" onPress={onClose}>Відмінити</Button>
-        <Button color="primary" type="submit">Увійти</Button>
+
+      <div className="flex w-[100%]  gap-4 items-center pt-8 justify-end">
+        <Button variant="light" onPress={onClose}>
+          Отмена
+        </Button>
+        <Button color="primary" type="submit">
+          Войти
+        </Button>
       </div>
     </Form>
   );
-}
+};
 
 export default LoginForm;

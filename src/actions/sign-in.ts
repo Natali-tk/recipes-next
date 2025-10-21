@@ -1,18 +1,18 @@
-"use server"
+"use server";
+
 import { signIn } from "@/auth/auth";
 
-const signInWithCredetials = async (email:string, password:string) => {
+export async function signInWithCredentials(email: string, password: string) {
   try {
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email,
       password,
       redirect: false
     });
-    return result;
+
+    return;
   } catch (error) {
     console.error("Помилка авторизації:", error);
     throw error;
   }
 }
-
-export default signInWithCredetials;
