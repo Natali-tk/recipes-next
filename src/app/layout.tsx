@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/providers/providers";
-import { SessionProvider } from "next-auth/react"
 import Header from "@/components/UI/layout/header";
+import { Providers } from "@/providers/provider";
 import { siteConfig } from "@/config/site.config";
 import { layoutConfig } from "@/config/layout.config";
+import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth/auth";
 import AppLoader from "@/hoc/app-loader";
 import Title from "@/components/UI/layout/title";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  subsets: ["latin"]
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  subsets: ["latin"]
 });
 
 export const metadata: Metadata = {
@@ -26,12 +26,11 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth()
-
+  const session = await auth();
 
   return (
     <html lang="en">
@@ -41,19 +40,24 @@ export default async function RootLayout({
         <Providers>
           <SessionProvider session={session}>
             <AppLoader>
-              <Header />
-              <main className={`flex flex-col max-w-[1024px] mx-auto px-[24px] justify-start items-center`}
-                style={{ height: `calc(100vh - ${layoutConfig.headerHeight} - ${layoutConfig.footerHeight})` }}
-              >
-                <Title />
-                {children}
-              </main>
-              <footer
-                className={`w-full flex items-center justify-center`}
-                style={{ height: layoutConfig.footerHeight }}
-              >
-                <p>{siteConfig.description}</p>
-              </footer>
+              <div className="flex min-h-screen flex-col justify-between">
+                <div className="flex flex-col">
+                  <Header />
+                  <main
+                    className={`flex flex-col max-w-[1024px] mx-auto px-[24px] justify-start items-center`}
+                  >
+                    <Title />
+                    {children}
+                  </main>
+                </div>
+
+                <footer
+                  className={`w-full flex items-center justify-center py-3`}
+                  style={{ height: layoutConfig.footerHeight }}
+                >
+                  <p>{siteConfig.description}</p>
+                </footer>
+              </div>
             </AppLoader>
           </SessionProvider>
         </Providers>

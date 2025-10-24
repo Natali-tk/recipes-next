@@ -1,8 +1,7 @@
 "use client";
 
-import { createIngredient } from "@/actions/ingredient";
 import { CATEGORY_OPTIONS, UNIT_OPTIONS } from "@/constants/select-options";
-// import { useIngredientStore } from "@/store/ingredient.store";
+import { useIngredientStore } from "@/store/ingredient.store";
 import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
 import { useState, useTransition } from "react";
 
@@ -17,35 +16,26 @@ const initialState = {
 const IngredientForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState(initialState);
-  // const { addIngredient } = useIngredientStore();
-  // const [isPending, startTransition] = useTransition();
+  const { addIngredient } = useIngredientStore();
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (formData: FormData) => { 
-    // startTransition(async () => {
-      // await addIngredient(formData);
-      // const storeError = useIngredientStore.getState().error;
-
-      // if (storeError) {
-      //   setError(storeError);
-      // } else {
-      //   setError(null);
-      //   setFormData(initialState);
-      // }
-    // });
-    console.log("Form submitted: ", formData);
-    const result = await createIngredient(formData);
-    if (result.error) {
-      setError(result.error);
-    } else {
-      setError(null);
-      // setFormData(initialState);
-    }
-    setFormData(initialState);
+    startTransition(async () => {
+      await addIngredient(formData);
+      const storeError = useIngredientStore.getState().error;
+      if (storeError) {
+        setError(storeError);
+      } else {
+        setError(null);
+        setFormData(initialState);
+      }
+    })
+    
   };
 
   return (
-    <Form className="w-[400px]" action={handleSubmit}>
-      {/* {error && <p className="text-red-500 mb-4">{error}</p>} */}
+    <Form className="w-full" action={handleSubmit}>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
       <Input
         isRequired
@@ -131,7 +121,7 @@ const IngredientForm = () => {
             }}
             endContent={
               <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-default-500 pointer-events-none">
-                ₽
+                грн
               </span>
             }
             validate={(value) => {
@@ -160,7 +150,7 @@ const IngredientForm = () => {
       />
 
       <div className="flex w-full items-center justify-end">
-        <Button color="primary" type="submit">
+        <Button color="primary" type="submit" isLoading={isPending}>
           Добавити інградієнт
         </Button>
       </div>

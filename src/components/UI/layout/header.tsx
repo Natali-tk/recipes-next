@@ -15,8 +15,8 @@ import { usePathname } from "next/navigation";
 import RegistrationModal from "../modals/registration.modal";
 import LoginModal from "../modals/login.modal";
 import { useState } from "react";
+import { signOutFunc } from "@/actions/sign-out";
 import { useAuthStore } from "@/store/auth.store";
-import signOutFunc from "@/actions/sign-out";
 
 export const Logo = () => {
   return (
@@ -82,7 +82,7 @@ export default function Header() {
   return (
     <Navbar style={{ height: layoutConfig.headerHeight }}>
       <NavbarBrand>
-        <Link href="/" className="flex gap-1">
+        <Link href="/" className="flex items-center gap-2">
           <Logo />
           <p className="font-bold text-inherit">{siteConfig.title}</p>
         </Link>
@@ -96,7 +96,7 @@ export default function Header() {
         {isAuth && <p>Привіт, {session?.user?.email}!</p>}
 
         {status === "loading" ? (
-          <p>Завантаження...</p>
+          <p>Загрузка...</p>
         ) : !isAuth ? (
           <>
             <NavbarItem>
