@@ -7,7 +7,7 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Button
+  Button,
 } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";

@@ -11,7 +11,7 @@ const PageContent = () => {
     siteConfig.pagesContent[pathname as keyof typeof siteConfig.pagesContent];
 
   if (!pageContent) {
-    return <div>Страница не найдена</div>;
+    return <div>Сторінка не знайдена</div>;
   }
 
   const cleanHTML = DOMPurify.sanitize(pageContent.content);
